@@ -28,20 +28,14 @@
         <div class="query" id="query3"> </div>
         <div class="query" id="query4"> </div>
         <div class="query" id="query5"> </div>
-        <div style="padding: 10px 0px;" class="weatherRequest">
-            Or click here: <br>
-            <button class="button" id="weatherButton">USE MY LOCATION</button>
-            
-        </div>
-        <div class="pending" id="weatherDisplay"> Processing request... </div>
+    
         <script>
             document.getElementById("searchButton").onclick = function () {
                 mySearch();
             };
-            document.getElementById("weatherButton").onclick = function () {                
-                myWeather();
+            document.getElementByClass("query").onclick = function () {
+                console.log("testing");
             };
-            document.getElementById("");
         </script>
 
         <a href="mypage.html" style="padding: 10px 10px;">GO BACK</a>
