@@ -3,6 +3,16 @@ const coord = "43.8106064,-79.3658743";
 var searchResults = [];
 var boxes = ["query1", "query2", "query3", "query4", "query5"];
 
+window.onload = function(){
+  // These are for buttons
+  document.getElementById("searchButton").onclick = function () {
+    mySearch();
+  };
+  document.getElementByClassNames("query").onclick = function () {
+    console.log("testing");
+  };
+}
+
 async function searchLocation(search){
     const baseUrl = "http://dataservice.accuweather.com/locations/v1/cities/autocomplete";
     const query = `?apikey=${key}&q=${search}`;

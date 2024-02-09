@@ -25,21 +25,7 @@
 }
 
 
-.weatherRequest button{
-    font-size: 16px;
-    background-color: #6ab7ff;
-    border: 2px none;
-    border-radius: 20px;
-    color: aliceblue;
-    padding: 10px 10px;
-    width: 160px;
-    cursor: hand;
-}
 
-.weatherRequest :hover {
-    background-color:#002ead;
-    transition: 0.3s;
-}
 
 .pending {
     font-size: 16px;

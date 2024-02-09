@@ -6,7 +6,8 @@ const createWindow = () => {
       height: 600
     })
   
-    win.loadFile('weather.html')
+    win.loadFile('index.html')
+
   }
 
   app.whenReady().then(() => {
