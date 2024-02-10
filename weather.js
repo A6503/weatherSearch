@@ -1,15 +1,27 @@
 const key = "qTfhxiGQiKXsEctMxGjBbGwX5cJZMABc";
 const coord = "43.8106064,-79.3658743";
 var searchResults = [];
-var boxes = ["query1", "query2", "query3", "query4", "query5"];
+var boxes = ["query1", "query2", "query3", "query4", "query5", "query6", "query7", "query8", "query9", "query10"];
 
 window.onload = function(){
   // These are for buttons
   document.getElementById("searchButton").onclick = function () {
     mySearch();
+    document.getElementById("qInfo").classList.add("showQuery");
   };
-  document.getElementByClassNames("query").onclick = function () {
-    console.log("testing");
+  for (let i = 0; i < boxes.length; i++){
+    document.getElementById(boxes[i]).onclick = function () {
+      document.getElementById("qInfo").classList.remove("showQuery");
+      boxes.forEach(refreshResults);
+      getCityFromID(searchResults[i]).then(function(city) {
+        getWeatherFromID(searchResults[i]).then(function(weather) {
+          document.getElementById(boxes[i]).innerHTML =  "Your City: " + city + "<br>"+  "Current Weather: " + weather;
+          document.getElementById(boxes[i]).classList.add("showQuery");
+        })
+      }
+      )
+      
+    }
   };
 }
 
@@ -37,41 +49,29 @@ async function searchLocation(search){
 }
 function mySearch(){
   searchResults = [];
-  searchLocation(document.getElementById('cityInput').value).then(function(cityList) {
-  for (let i = 0; i < cityList.cities.length; i++){
-      searchResults.push(cityList.cities[i] + ", " + cityList.states[i] + ", " + cityList.countries[i]);
+  stringResults = [];
+  searchLocation(document.getElementById('cityInput').value).then(function(results) {
+    for (let i = 0; i < results.cities.length; i++){
+      stringResults.push(results.cities[i] + ", " + results.states[i] + ", " + results.countries[i]);
+      searchResults.push(results.keys[i]);
     }
-    displayResults(0);
+    displayResults(stringResults);
   })
   
   return;
 }
 
-function displayResults(value){
+function displayResults(strings){
   boxes.forEach(refreshResults);
-  // Side cases
-  var offset = 1;
   if(searchResults.length == 0){
     document.getElementById(boxes[0]).innerHTML = "No results found";
     document.getElementById(boxes[0]).classList.add("error");
+    document.getElementById(qInfo).classList.remove("showQuery");
     return;
   }
-  if (value == 0){
-    document.getElementById(boxes[0]).innerHTML = searchResults[0];
-    document.getElementById(boxes[0]).classList.add("showQuery");
-    offset = 0;
-    value += 1;
-  }
-  
-  
-  for(i = value; i < searchResults.length; i++){
-    var boxIndex = i - value + offset;
-    if (boxIndex >= boxes.length){
-      document.getElementById(boxes[boxes.length - 1]).innerHTML = "...and " + (searchResults.length - i) + " more results";
-      break;
-    }
-    document.getElementById(boxes[boxIndex]).innerHTML = searchResults[i];
-    document.getElementById(boxes[boxIndex]).classList.add("showQuery");
+  for(i = 0; i < searchResults.length; i++){
+    document.getElementById(boxes[i]).innerHTML = strings[i];
+    document.getElementById(boxes[i]).classList.add("showQuery");
   }
   
 }
@@ -88,6 +88,20 @@ async function getCityFromCoord(gPos){
     str += JSON.parse(JSON.stringify(data)).Country.EnglishName;
     return str;
 }
+
+async function getCityFromID(id){
+  const baseUrl = `http://dataservice.accuweather.com/locations/v1/${id}`;
+  const query = `?apikey=${key}`;
+
+  var str = "";
+  const res = await fetch(baseUrl + query);
+  const data = await res.json();
+  str += JSON.parse(JSON.stringify(data)).EnglishName + ", ";
+  str += JSON.parse(JSON.stringify(data)).AdministrativeArea.EnglishName + ", ";
+  str += JSON.parse(JSON.stringify(data)).Country.EnglishName;
+  return str;
+}
+
 async function getWeatherFromCoord(gPos){
     const cityQuery = `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${key}&q=${gPos.coords.latitude}%2C${gPos.coords.longitude}&toplevel=true`;
     const cityResource = await fetch(cityQuery);
@@ -103,7 +117,7 @@ async function getWeatherFromCoord(gPos){
     return currentDay;
 }
 
-async function getWeather(id){
+async function getWeatherFromID(id){
     const baseUrl = `http://dataservice.accuweather.com/forecasts/v1/daily/1day/${id}`;
     const query = `?apikey=${key}`;
 

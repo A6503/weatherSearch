@@ -13,15 +13,15 @@
     font-size: 16px;
     padding: 16px 16px;
     width: 320px;
-    background-color: rgb(92, 91, 80);
+    background-color: rgb(177, 226, 255);
     color: black;
-    border: 2px solid black;
+    /*border: 2px solid black;*/
     display: block;
 }
 
 .showQuery:hover{
-    background-color: rgb(151, 151, 151);
-    transition: 0.3s;
+    background-color: rgb(209, 238, 255);
+    transition: 0.4s;
 }
 
 
