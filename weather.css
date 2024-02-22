@@ -47,6 +47,7 @@
   }
 
 .result {
+    display: none;
     font-size: 16px;
     padding: 16px 16px;
     width: 320px;

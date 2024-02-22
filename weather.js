@@ -4,6 +4,7 @@ var searchResults = [];
 var boxes = ["query1", "query2", "query3", "query4", "query5", "query6", "query7", "query8", "query9", "query10"];
 
 window.onload = function(){
+  
   // These are for buttons
   document.getElementById("searchButton").onclick = function () {
     mySearch();
@@ -15,8 +16,8 @@ window.onload = function(){
       boxes.forEach(refreshResults);
       getCityFromID(searchResults[i]).then(function(city) {
         getWeatherFromID(searchResults[i]).then(function(weather) {
-          document.getElementById(boxes[i]).innerHTML =  "Your City: " + city + "<br>"+  "Current Weather: " + weather;
-          document.getElementById(boxes[i]).classList.add("showQuery");
+          document.getElementById("result").innerHTML =  "Your City: " + city + "<br>"+  "Current Weather: " + weather;
+          document.getElementById("result").classList.add("show");
         })
       }
       )
@@ -62,6 +63,8 @@ function mySearch(){
 }
 
 function displayResults(strings){
+  document.getElementById("result").classList.remove("show");
+
   boxes.forEach(refreshResults);
   if(searchResults.length == 0){
     document.getElementById(boxes[0]).innerHTML = "No results found";
