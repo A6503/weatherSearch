@@ -9,4 +9,4 @@ The search function uses the Accuweather autocomplete search, returning the 10 m
 # Packaging
 Using Electron Forge, the package.json script is automatically created and the application can be built with `npm run make`. An executable file will be created in the output folder, ready to be run.
 
-index.html is also operable by itself as a standalone webpage, however through Electron it becomes portable and easy to distribute.
+The application is alternatively viable without packaging, as index.html itself is functional as a simple html webpage with css and javascript. Through Electron it becomes portable and easy to distribute.
